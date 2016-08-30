@@ -28,6 +28,7 @@ class Configuration < ApplicationRecord
                    http_proxy:                        CONFIG['http_proxy'],
                    no_proxy:                          nil,
                    cleanup_after_days:                nil,
+                   autolock_after_days:               nil,
                    theme:                             CONFIG['theme'],
                    cleanup_empty_projects:            nil,
                    disable_publish_for_branches:      nil,

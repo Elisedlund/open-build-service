@@ -70,4 +70,10 @@ module Clockwork
   every(1.week, 'consistency check') do
     ConsistencyCheckJob.new.delay.perform
   end
+
+  every(1.day, 'autolock check') do
+    User.current = User.get_default_admin
+    ProjectAutoLockCheck.new.delay.perform
+  end
+
 end

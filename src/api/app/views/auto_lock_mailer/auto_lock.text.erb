@@ -1,0 +1,20 @@
+Project <%= @project.name %> is locked!
+
+Project has been automatically locked to avoid unnecessary rebuilds of inactive projects. You are receiving this email, because you are project maintainer.
+
+You can unlock project from webui:
+<%= url_for( controller: 'webui/project',
+  action: :show,
+  host: @host,
+  :project => @project.name) %>
+
+or from command line:
+osc unlock <%= @project.name %>
+
+You can remove 'AutoLock' attribute from project attributes in order prevent project being autolocked again:
+<%= url_for(
+  controller: 'webui/attribute',
+  action: :index,
+  host: @host,
+  :project => @project.name) %>
+

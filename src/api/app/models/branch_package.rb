@@ -13,6 +13,7 @@ class BranchPackage
     @attribute = params[:attribute] || 'OBS:Maintained'
     @target_project = nil
     @auto_cleanup = nil
+    @auto_lock = nil
     @add_repositories = params[:add_repositories]
     # check if repository path elements do use each other and adapt our own path elements
     @update_path_elements = params[:update_path_elements]
@@ -216,6 +217,7 @@ class BranchPackage
         tprj.flags.create(flag: 'access', status: 'disable') if @noaccess
         tprj.store
         add_autocleanup_attribute(tprj) if @auto_cleanup
+        add_autolock_attribute(tprj) if @auto_lock
       end
       if params[:request]
         ans = AttribNamespace.find_by_name 'OBS'
@@ -234,6 +236,13 @@ class BranchPackage
     at = AttribType.find_by_namespace_and_name!('OBS', 'AutoCleanup')
     a = Attrib.new(project: tprj, attrib_type: at)
     a.values << AttribValue.new(value: (DateTime.now + @auto_cleanup.days), position: 1)
+    a.save
+  end
+
+  def add_autolock_attribute(tprj)
+    at = AttribType.find_by_namespace_and_name('OBS', 'AutoLock')
+    return unless at
+    a = Attrib.new(project: tprj, attrib_type: at)
     a.save
   end
 
@@ -352,6 +361,7 @@ class BranchPackage
       @target_project = User.current.branch_project_name(p[:link_target_project])
       @auto_cleanup = ::Configuration.cleanup_after_days
       @auto_cleanup ||= 14 if p[:base_project].try(:image_template?)
+      @auto_lock = ::Configuration.autolock_after_days
     end
 
     # link against srcmd5 instead of plain revision
@@ -585,6 +595,7 @@ class BranchPackage
         @target_project += ":#{params[:package]}" if params[:package]
       end
       @auto_cleanup = ::Configuration.cleanup_after_days
+      @auto_lock = ::Configuration.autolock_after_days
     end
     if @target_project && !Project.valid_name?(@target_project)
       raise InvalidProjectNameError, "invalid project name '#{@target_project}'"

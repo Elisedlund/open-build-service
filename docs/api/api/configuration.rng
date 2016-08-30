@@ -181,6 +181,12 @@
           </element>
         </optional>
         <optional>
+          <element name="autolock_after_days">
+            <!-- Locks projects with 'AutoLock' attribute after given number of inactivity days. -->
+            <text/>
+          </element>
+        </optional>
+        <optional>
           <element name="gravatar">
             <!-- Loads pictures of users from gravatar. This works via a hash of their email adress. -->
             <choice>

@@ -1547,6 +1547,7 @@ our $configuration = [
 	'disallow_group_creation',
 	'change_password',
 	'cleanup_after_days',
+	'autolock_after_days',
 	'hide_private_options',
 	'gravatar',
 	'enforce_project_keys',

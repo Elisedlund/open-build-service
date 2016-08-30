@@ -152,6 +152,10 @@ at.attrib_type_modifiable_bies.where(user_id: admin.id).first_or_create
 at.allowed_values << AttribAllowedValue.new( value: "DisableDevel" )
 at.allowed_values << AttribAllowedValue.new( value: "BugownerOnly" )
 
+at = ans.attrib_types.where(name: "AutoLock").first_or_create(value_count: 0,
+  description: "Mark this project to be locked automatically after inactivity period.")
+at.attrib_type_modifiable_bies.where(role_id: maintainer_role.id).first_or_create
+
 update_all_attrib_type_descriptions
 
 puts "Seeding issue trackers ..."
