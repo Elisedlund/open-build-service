@@ -3414,6 +3414,45 @@ EOF
     assert_response :success
   end
 
+  def test_branch_creating_project_autolock
+    login_king
+
+    # enable autolock in configuration
+    c = Configuration.first
+    c.autolock_after_days = 1
+    c.save!
+
+    # branch package which will be autolocked
+    prepare_request_with_user 'fredlibs', 'buildservice'
+    post '/source/autolock/autolock_pack', :cmd => :branch
+    assert_response :success
+
+    # check that autolock attribute got created
+    get '/source/home:fredlibs:branches:autolock/_attribute'
+    assert_response :success
+    assert_xml_tag :tag => "attribute", :attributes => {:name=>"AutoLock", :namespace=>"OBS"}
+
+    # perform autolock check
+    Timecop.freeze(12.days) # in future
+    ProjectAutoLockCheck.new.perform
+    Timecop.return
+
+    # check that project is locked
+    get "/source/home:fredlibs:branches:autolock/_meta"
+    assert_response :success
+    assert_xml_tag :tag => "enable", :parent => {:tag => "lock"}
+
+    # check that mail was sent to 'fredlibs'
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal 'fred@feuerstein.de', mail.to[0]
+    assert_equal "Project home:fredlibs:branches:autolock is locked", mail.subject
+
+    # disable autolock
+    c = Configuration.first
+    c.autolock_after_days = nil
+    c.save!
+  end
+
   def test_branch_package_delete_and_undelete
     post '/source/home:Iggy/TestPack', cmd: :branch, target_project: 'home:coolo:test'
     assert_response 401

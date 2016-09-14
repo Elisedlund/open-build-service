@@ -68,14 +68,17 @@ class Webui::UserControllerTest < Webui::IntegrationTest
       assert_equal "Apache", find(:xpath, './/tr[1]/td[1]').text
       assert_equal "Up-to-date Apache packages", find(:xpath, './/tr[1]/td[2]').text
 
-      assert_equal "home:fred", find(:xpath, './/tr[2]/td[1]').text
-      assert_equal "can be used for operations, to be cleaned up afterwards", find(:xpath, './/tr[2]/td[2]').text
+      assert_equal "autolock", find(:xpath, './/tr[2]/td[1]').text
+      assert_equal "autolock attribute test project", find(:xpath, './/tr[2]/td[2]').text
 
-      assert_equal "home:fred:DeleteProject", find(:xpath, './/tr[3]/td[1]').text
-      assert_equal "This project gets deleted by request test", find(:xpath, './/tr[3]/td[2]').text
+      assert_equal "home:fred", find(:xpath, './/tr[3]/td[1]').text
+      assert_equal "can be used for operations, to be cleaned up afterwards", find(:xpath, './/tr[3]/td[2]').text
 
-      assert_equal "kde4", find(:xpath, './/tr[4]/td[1]').text
-      assert_equal "blub", find(:xpath, './/tr[4]/td[2]').text
+      assert_equal "home:fred:DeleteProject", find(:xpath, './/tr[4]/td[1]').text
+      assert_equal "This project gets deleted by request test", find(:xpath, './/tr[4]/td[2]').text
+
+      assert_equal "kde4", find(:xpath, './/tr[5]/td[1]').text
+      assert_equal "blub", find(:xpath, './/tr[5]/td[2]').text
     end
 
     click_link("Owned Project/Packages")

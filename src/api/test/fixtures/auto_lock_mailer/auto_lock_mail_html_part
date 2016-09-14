@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p><b>Project autolock is locked!</b></p>
+    <p>
+      Project has been automatically locked to avoid unnecessary rebuilds of inactive projects.
+      You are receiving this email, because you are project maintainer.
+      You can unlock project from <a href="http://localhost/project/show/autolock">webui</a>
+      or via command line:
+    </p>
+    <p>
+      osc unlock autolock
+    </p>
+    <p>
+      You can remove 'AutoLock' attribute from project <a href="http://localhost/attribs/autolock">attributes</a>
+      in order prevent project being autolocked again.
+    </p>
+  </body>
+</html>
+
+

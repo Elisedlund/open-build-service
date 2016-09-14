@@ -1,0 +1,14 @@
+Project autolock is locked!
+
+Project has been automatically locked to avoid unnecessary rebuilds of inactive projects. You are receiving this email, because you are project maintainer.
+
+You can unlock project from webui:
+http://localhost/project/show/autolock
+
+or from command line:
+osc unlock autolock
+
+You can remove 'AutoLock' attribute from project attributes in order prevent project being autolocked again:
+http://localhost/attribs/autolock
+
+

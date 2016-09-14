@@ -194,3 +194,11 @@ record_48:
   role: maintainer
   group: test_group
   project: BrokenPublishing
+record_49:
+  role: maintainer
+  group: test_group
+  project: autolock
+record_50:
+  user: fred
+  role: maintainer
+  project: autolock
